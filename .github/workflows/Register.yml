@@ -26,7 +26,7 @@ jobs:
         run: npm run build
 
       - name: Run lint checks
-        run: npm run lint > lint_result.text 2>&1
+        run: npm run lint > lint_result.txt 2>&1
         continue-on-error: true
 
       - name: Upload lint result
