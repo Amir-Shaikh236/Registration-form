@@ -1,0 +1,36 @@
+name: Register
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v4
+
+      - name: Node.js Install
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18.x"
+
+      - name: Install Dependencies
+        run: npm Install
+
+      - name: run build
+        run: npm run build
+
+      - name: Run lint checks
+        run: npm run lint > lint_result.text 2>&1
+        continue-on-error: true
+
+      - name: Upload lint result
+        uses: actions/upload-artifact@v4
+        with:
+          name: lint_result
+          path: lint_result.txt
